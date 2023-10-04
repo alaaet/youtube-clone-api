@@ -1,5 +1,6 @@
 package com.alaaet.youtubeclone.controller;
 
+import com.alaaet.youtubeclone.dto.CommentDto;
 import com.alaaet.youtubeclone.dto.UploadVideoResponse;
 import com.alaaet.youtubeclone.dto.VideoDto;
 import com.alaaet.youtubeclone.service.VideoService;
@@ -53,4 +54,9 @@ public class VideoController {
         return videoService.dislikeVideo(videoId);
     }
 
+    @PostMapping("/{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public void addComment(@PathVariable String videoId, @RequestBody CommentDto commentDto) {
+        videoService.addComment(videoId, commentDto);
+    }
 }

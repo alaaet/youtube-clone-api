@@ -1,7 +1,9 @@
 package com.alaaet.youtubeclone.service;
 
+import com.alaaet.youtubeclone.dto.CommentDto;
 import com.alaaet.youtubeclone.dto.UploadVideoResponse;
 import com.alaaet.youtubeclone.dto.VideoDto;
+import com.alaaet.youtubeclone.model.Comment;
 import com.alaaet.youtubeclone.model.Video;
 import com.alaaet.youtubeclone.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
@@ -129,5 +131,16 @@ public class VideoService {
         videoRepository.save(video);
 
         return mapToVideoDto(video);
+    }
+
+    public void addComment(String videoId, CommentDto commentDto) {
+
+        Video video = getVideoById(videoId);
+        Comment comment = new Comment();
+        comment.setAuthorId(commentDto.getAuthorId());
+        comment.setText(commentDto.getCommentText());
+        video.addComment(comment);
+        videoRepository.save(video);
+
     }
 }

@@ -3,6 +3,7 @@ package com.alaaet.youtubeclone.controller;
 import com.alaaet.youtubeclone.service.UserRegistrationService;
 import com.alaaet.youtubeclone.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +24,13 @@ public class UserController {
     }
 
     @PostMapping("subscribe/{userId}")
+    @ResponseStatus(HttpStatus.OK)
     public boolean subscribeUser(@PathVariable String userId){
         userService.subscribeUser(userId);
         return true;
     }
     @PostMapping("unsubscribe/{userId}")
+    @ResponseStatus(HttpStatus.OK)
     public boolean unsubscribeUser(@PathVariable String userId){
         userService.unsubscribeUser(userId);
         return true;
