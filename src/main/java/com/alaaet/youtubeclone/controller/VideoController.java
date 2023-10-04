@@ -67,4 +67,10 @@ public class VideoController {
     public List<CommentDto> getComments(@PathVariable String videoId) {
         return videoService.getAllComments(videoId);
     }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<VideoDto> getAllVideos() {
+        return videoService.getAllVideos();
+    }
 }

@@ -158,4 +158,9 @@ public class VideoService {
         commentDto.setAuthorId(comment.getAuthorId());
         return commentDto;
     }
+
+    public List<VideoDto> getAllVideos() {
+        List<Video> videoList = videoRepository.findAll();
+        return videoList.stream().map(this::mapToVideoDto).toList();
+    }
 }
