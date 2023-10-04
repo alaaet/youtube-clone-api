@@ -64,7 +64,8 @@ public class VideoService {
         Video savedVideo = getVideoById(videoId);
         // Increment the view count
         increaseViewCount(savedVideo);
-        // Increment
+        // Add videoId to the user's viewed videos history
+        userService.addToViewedVideos(videoId);
         // Map the video object to the videoDto and return the videoDto
         return mapToVideoDto(savedVideo);
     }
@@ -72,7 +73,6 @@ public class VideoService {
     private void increaseViewCount(Video video) {
         video.incrementViewCount();
         videoRepository.save(video);
-        userService.addToViewedVideos(video.getId());
     }
     public VideoDto likeVideo(String videoId) {
         // Get video by video id
