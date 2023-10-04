@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class VideoService {
@@ -142,5 +144,18 @@ public class VideoService {
         video.addComment(comment);
         videoRepository.save(video);
 
+    }
+
+    public List<CommentDto> getAllComments(String videoId) {
+        Video video = getVideoById(videoId);
+        List<Comment> commentList = video.getCommentList();
+     return commentList.stream().map(this::mapToCommentDto).toList();
+    }
+
+    private CommentDto mapToCommentDto(Comment comment) {
+        CommentDto commentDto = new CommentDto();
+        commentDto.setCommentText(comment.getText());
+        commentDto.setAuthorId(comment.getAuthorId());
+        return commentDto;
     }
 }
