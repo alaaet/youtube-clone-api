@@ -1,12 +1,11 @@
 package com.alaaet.youtubeclone.controller;
 
 import com.alaaet.youtubeclone.service.UserRegistrationService;
+import com.alaaet.youtubeclone.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -14,11 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserRegistrationService userRegistrationService;
+    private final UserService userService;
 
     @GetMapping("/register")
     public String register(Authentication authentication){
         Jwt jwt = (Jwt)authentication.getPrincipal();
         userRegistrationService.registerUser(jwt.getTokenValue());
         return "User Registeration Successful";
+    }
+
+    @PostMapping("subscribe/{userId}")
+    public boolean subscribeUser(@PathVariable String userId){
+        userService.subscribeUser(userId);
+        return true;
+    }
+    @PostMapping("unsubscribe/{userId}")
+    public boolean unsubscribeUser(@PathVariable String userId){
+        userService.unsubscribeUser(userId);
+        return true;
     }
 }
